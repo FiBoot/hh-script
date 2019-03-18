@@ -185,9 +185,11 @@ function getMoney(index, element) {
       const percent = Math.round((index / girls.length) * 10000) / 100;
       element.style.width = `${percent}%`;
       element.innerText = `${percent}% (${index}/${girls.length})`;
-      xhrPost(`class=Girl&which=${girls[index]}&action=get_salary`, () =>
-        getMoney(index + 1, element)
-      );
+      const formData = new FormData();
+      formData.append('class', 'Girl');
+      formData.append('action', 'get_salary');
+      formData.append('which', girls[index]);
+      xhrPost(formData, () => getMoney(index + 1, element));
     } else {
       element.classList.remove(ID.LOADING);
     }
