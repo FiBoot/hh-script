@@ -129,7 +129,7 @@ function createFightBlocks(board) {
       style: Object.assign({}, STYLE.OPPONENT_IMG, STYLE.BORDER_RAIUDS),
       attributes: {
         title: opponent,
-        src: `https://raw.githubusercontent.com/FiBoot/hh-script/master/img/${index + 1}.png`
+        src: `${SOURCE}/img/${index + 1}.png`
       }
     });
   });

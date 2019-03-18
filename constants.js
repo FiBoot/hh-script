@@ -1,5 +1,6 @@
 // CONFIG
 const POST_URL = 'https://www.hentaiheroes.com/ajax.php';
+const SOURCE = 'https://raw.githubusercontent.com/FiBoot/hh-script/master'
 const TIMEOUT_SPAN = 50;
 const ID_PREFIX = 'HHS_';
 
