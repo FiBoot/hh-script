@@ -13,10 +13,7 @@ function appendElement({ type, parent, attributes, style }) {
 
 function xhrPost(data, cb) {
   const xhr = new XMLHttpRequest();
-  // xhr.open('POST', POST_URL);
-  // TEST
-  xhr.open('POST', 'http://letakol.free.fr/fiboot/api/ajax.php');
-  
+  xhr.open('POST', POST_URL);
   xhr.onload = cb;
   xhr.send(data);
 }
