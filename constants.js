@@ -79,7 +79,8 @@ const STYLE = {
   },
   BOARD: {
     float: 'left',
-    backgroundImage: 'linear-gradient(to top,#572332 0,#572332 1%,#2c1e1c 100%)',
+    backgroundColor: '#4b202c',
+    // backgroundImage: 'linear-gradient(to top,#572332 0,#572332 1%,#2c1e1c 100%)',
     backgroundSize: '8em',
     borderRadius: '.35em',
     padding: '.5em',
@@ -109,7 +110,8 @@ const STYLE = {
   },
   OPPONENT_IMG: {
     width: '5em',
-    height: '5em'
+    height: '5em',
+    backgroundColor: '#848597'
   },
   FIGHT_LOADING: {
     position: 'absolute',
@@ -124,7 +126,7 @@ const STYLE = {
     display: 'inline-block',
     width: '1em',
     height: '1em',
-    margin: '0 .2em 0 .8em',
+    margin: '0 .5em 0 1em',
     backgroundColor: '#1e2754',
     border: '.1em solid #f0f0f0',
     borderRadius: '.2em',

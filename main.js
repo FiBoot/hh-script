@@ -110,7 +110,6 @@ function createFightBlocks(board) {
   });
 
   OPPONENTS.forEach((opponent, index) => {
-    // TODO: images
     const id = `${ID_PREFIX}FIGHT_${index}`;
     const fightBlock = appendElement({
       type: 'div',
@@ -130,8 +129,7 @@ function createFightBlocks(board) {
       style: Object.assign({}, STYLE.OPPONENT_IMG, STYLE.BORDER_RAIUDS),
       attributes: {
         title: opponent,
-        src:
-          'https://e-cdns-images.dzcdn.net/images/cover/af2ba8681acef2016a1bb8b6f7f7a7d6/352x477-000000-80-0-0.jpg'
+        src: `img/${index + 1}.png`
       }
     });
   });
@@ -139,15 +137,7 @@ function createFightBlocks(board) {
   const fightOption = appendElement({
     type: 'div',
     parent: fightBoard,
-    style: { float: 'left', margin: '.5em 0' }
-  });
-  appendElement({
-    type: 'label',
-    parent: fightOption,
-    style: Object.assign({ marginLeft: '.5em' }),
-    attributes: {
-      innerText: 'Fight:'
-    }
+    style: { float: 'left', margin: '.5em' }
   });
   FIGHT_OPTIONS.forEach((value, index) => {
     appendElement({
