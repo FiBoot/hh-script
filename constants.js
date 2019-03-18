@@ -1,4 +1,4 @@
-const ID_PREFIX = 'HHS_';
+const POST_URL = 'https://www.hentaiheroes.com/ajax.php';
 const TIMEOUT_SPAN = 30;
 const OPPONENTS = [
   'Dark Lord',
@@ -13,6 +13,7 @@ const OPPONENTS = [
   'Karole'
 ];
 
+const ID_PREFIX = 'HHS_';
 const ID = {
   HH_BODY: 'hh_hentai',
   FLIP_BTN: `${ID_PREFIX}FLIP_BTN`,

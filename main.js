@@ -7,8 +7,20 @@ function createElement({ type, attributes, style }) {
 
 function appendElement({ type, parent, attributes, style }) {
   const element = createElement({ type, parent, attributes, style });
-  (parent ? parent : document.getElementById(ID.HH_BODY)).appendChild(element);
+  // (parent ? parent : document.getElementById(ID.HH_BODY)).appendChild(element);
+  // TEST
+  (parent ? parent : document.getElementById('navbar')).appendChild(element);
   return element;
+}
+
+function xhrPost(data, cb) {
+  const xhr = new XMLHttpRequest();
+  // xhr.open('POST', POST_URL);
+  // TEST
+  xhr.open('POST', 'http://letakol.free.fr/fiboot/api/ajax.php');
+  
+  xhr.onload = cb;
+  xhr.send(data);
 }
 
 function createBaseInterface() {
@@ -116,12 +128,16 @@ function getMoney(index, element) {
       setTimeout(() => getMoney(index + 1, element), TIMEOUT_SPAN);
     }
   } else {
-    element.innerText = 'No girls found !'
+    element.innerText = 'No girls found !';
   }
 }
 
 function fightOpponent(index, element) {
-  console.log('fight', index, element);
+  element.innerText = 'fighting';
+  xhrPost(`class=Battle&action=fight&who[id_troll]=${index}`, result => {
+    element.innerText = OPPONENTS[index];
+    console.log(result);
+  });
 }
 
 function main() {
