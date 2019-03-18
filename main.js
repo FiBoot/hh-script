@@ -14,6 +14,9 @@ function appendElement({ type, parent, attributes, style }) {
 }
 
 function xhrPost(data, cb) {
+  if (DEVMOD) {
+    return setTimeout(() => cb(), TIMEOUT_SPAN);
+  }
   const xhr = new XMLHttpRequest();
   xhr.open('POST', POST_URL);
   xhr.onload = cb;
@@ -33,9 +36,11 @@ function createBaseInterface() {
     style: Object.assign(
       {},
       STYLE.FLIP_BTN,
-      STYLE.ABSOLUTE_TR,
-      STYLE.POINTER,
-      STYLE.BORDER_RAIUDS
+      STYLE.ABSOLUTE,
+      STYLE.TOP_RIGHT,
+      STYLE.ICON_SIZE,
+      STYLE.BORDER_RAIUDS,
+      STYLE.POINTER
     ),
     attributes: {
       id: ID.FLIP_BTN,
@@ -51,7 +56,8 @@ function createBaseInterface() {
     style: Object.assign(
       {},
       STYLE.BOARD_WRAP,
-      STYLE.ABSOLUTE_TR,
+      STYLE.ABSOLUTE,
+      STYLE.TOP_RIGHT,
       STYLE.BORDER_RAIUDS
     ),
     attributes: {
@@ -61,7 +67,13 @@ function createBaseInterface() {
   appendElement({
     type: TYPE.IMG,
     parent: boardWrap,
-    style: Object.assign({}, STYLE.CLOSE, STYLE.ABSOLUTE_TR, STYLE.POINTER),
+    style: Object.assign(
+      {},
+      STYLE.TOP_RIGHT,
+      STYLE.ICON_SIZE,
+      STYLE.ABSOLUTE,
+      STYLE.POINTER
+    ),
     attributes: {
       src: IMG.CROSS,
       onclick: () => {
@@ -94,22 +106,38 @@ function createMoneyRetriever(board) {
     type: TYPE.DIV,
     parent: board,
     style: Object.assign(
-      { backgroundColor: 'rgba(0,0,0,.8)' },
+      {},
+      STYLE.LOADING_BAR_WRAP,
       STYLE.MARGIN_TOP,
       STYLE.BORDER_RAIUDS,
       STYLE.POINTER
-    )
+    ),
+    attributes: {
+      onclick: () => {
+        mutex(loadingBar, () => getMoney(0, loadingBar));
+      }
+    }
   });
-  const load = appendElement({
+  const loadingBar = appendElement({
     type: TYPE.DIV,
     parent: loadWrap,
     style: Object.assign({}, STYLE.LOADING_BAR, STYLE.BORDER_RAIUDS),
     attributes: {
-      id: ID.LOADING_BAR,
-      onclick: event => mutex(event.target, () => getMoney(0, event.target))
+      id: ID.LOADING_BAR
     }
   });
-  mutex(load, () => getMoney(0, load));
+  appendElement({
+    type: TYPE.DIV,
+    parent: loadWrap,
+    style: Object.assign({}, STYLE.LOADING_TEXT, STYLE.ABSOLUTE),
+    attributes: { id: ID.LOADING_TEXT }
+  });
+  appendElement({
+    type: TYPE.DIV,
+    parent: loadWrap,
+    style: Object.assign({}, STYLE.MONEY_ICON, STYLE.ABSOLUTE, STYLE.ICON_SIZE)
+  });
+  mutex(loadingBar, () => getMoney(0, loadingBar));
 }
 
 function createFightBlocks(board) {
@@ -182,9 +210,10 @@ function createFightBlocks(board) {
 function getMoney(index, element) {
   if (girls) {
     if (index <= girls.length) {
-      const percent = Math.round((index / girls.length) * 10000) / 100;
+      const percent = Math.round((index / girls.length) * 100);
+      const textElement = document.getElementById(ID.LOADING_TEXT);
       element.style.width = `${percent}%`;
-      element.innerText = `${percent}% (${index}/${girls.length})`;
+      textElement.innerText = `${percent}% (${index} / ${girls.length})`;
       const formData = new FormData();
       formData.append('class', 'Girl');
       formData.append('action', 'get_salary');
@@ -215,13 +244,14 @@ function selectFightOption(index) {
 function fightOpponent(index, element, count, max) {
   if (count < max) {
     const fightLoading = appendElement({
-      type: TYPE.IMG,
+      type: TYPE.DIV,
       parent: element,
-      style: Object.assign({}, STYLE.FIGHT_LOADING, STYLE.BORDER_RAIUDS),
-      attributes: {
-        title: 'fighting..',
-        src: IMG.LOADING
-      }
+      style: Object.assign(
+        {},
+        STYLE.FIGHT_LOADING,
+        STYLE.ABSOLUTE,
+        STYLE.BORDER_RAIUDS
+      )
     });
 
     const formData = new FormData();

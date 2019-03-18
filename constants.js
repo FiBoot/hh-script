@@ -1,7 +1,8 @@
 // CONFIG
+const DEMOD = false;
 const POST_URL = 'https://www.hentaiheroes.com/ajax.php';
 const SOURCE = 'https://raw.githubusercontent.com/FiBoot/hh-script/master';
-const TIMEOUT_SPAN = 50;
+const TIMEOUT_SPAN = 100;
 const ID_PREFIX = 'HHS_';
 
 // FIGHT
@@ -23,6 +24,7 @@ const FIGHT_OPTIONS = [1, 5, 20];
 const ID = {
   HH_BODY: 'hh_hentai',
   LOADING: `${ID_PREFIX}LOADING`,
+  LOADING_TEXT: `${ID_PREFIX}LOADING_TEXT`,
   FLIP_BTN: `${ID_PREFIX}FLIP_BTN`,
   BOARD: `${ID_PREFIX}BOARD`,
   LOADING_BAR: `${ID_PREFIX}LOADING_BAR`,
@@ -33,29 +35,22 @@ const ID = {
 // IMGS
 const IMG = {
   CROSS: 'https://hh.hh-content.com/design_v2/close_cross_icon.png',
-  LOADING:
-    'http://sandboxscpfr.wdfiles.com/local--files/aire-de-sol/filters-load.gif'
+  LOADING: 'https://hh.hh-content.com/ic_loading_carrot.svg'
 };
 
 // STYLE
 const STYLE = {
-  ABSOLUTE_TR: {
-    position: 'absolute',
-    top: '8px',
-    right: '8px'
-  },
+  ABSOLUTE: { position: 'absolute' },
   POINTER: { cursor: 'pointer' },
   MARGIN_TOP: { marginTop: '16px' },
   MARGIN_LEFT: { marginLeft: '16px' },
   BORDER_RAIUDS: { borderRadius: '8px' },
   DARK_BACKGROUND: { backgroundColor: '#1e2754' },
+  TOP_RIGHT: { top: '8px', right: '8px' },
+  ICON_SIZE: { width: '32px', height: '32px' },
 
   FLIP_BTN: {
     display: 'none',
-    width: '40px',
-    height: '40px',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
     backgroundImage: 'linear-gradient(to top,#008ed5 0,#05719c 100%)',
     boxShadow: '0 4px 0 rgba(13,22,25,.6), inset 0 4px 0 #6df0ff',
     border: '1px solid #000'
@@ -68,17 +63,13 @@ const STYLE = {
     padding: '4px',
     zIndex: 10
   },
-  CLOSE: {
-    width: '32px',
-    height: '32px'
-  },
   BOARD: {
     float: 'left',
     backgroundColor: '#4b202c',
     borderRadius: '8px',
     padding: '8px',
     color: '#efefef',
-    fontFamily: 'sans-serif',
+    fontFamily: "'Carter One','Alegreya Sans',sans-serif",
     fontWeight: 'bold'
   },
   BOARD_TITLE: {
@@ -86,12 +77,32 @@ const STYLE = {
     paddingTop: '4px'
   },
 
+  LOADING_BAR_WRAP: {
+    position: 'relative',
+    marginLeft: '16px',
+    marginRight: '16px',
+    backgroundColor: 'rgba(0,0,0,.8)'
+  },
   LOADING_BAR: {
     height: '32px',
     lineHeight: '32px',
-    backgroundImage: 'linear-gradient(.25turn, #32385f, #218fd6)',
+    backgroundImage: 'linear-gradient(to right,#505889 0,#1e9fdf 100%)',
     whiteSpace: 'nowrap',
     textAlign: 'center'
+  },
+  LOADING_TEXT: {
+    width: '100%',
+    top: '0',
+    textAlign: 'center',
+    lineHeight: '32px'
+  },
+  MONEY_ICON: {
+    top: '0',
+    left: '-16px',
+    backgroundImage: 'url(https://hh.hh-content.com/design/ic_SC.png)',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: '32px'
   },
 
   FIGHT_BLOCK: {
@@ -107,12 +118,15 @@ const STYLE = {
     backgroundColor: '#848597'
   },
   FIGHT_LOADING: {
-    position: 'absolute',
     top: 0,
     left: 0,
     width: '88px',
     height: '88px',
-    backgroundColor: 'rgba(0,0,0,.5)'
+    backgroundColor: 'rgba(0,0,0,.5)',
+    backgroundImage: 'url(https://hh.hh-content.com/ic_loading_carrot.svg',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: '64px'
   },
 
   FIGHT_OPTION: {
