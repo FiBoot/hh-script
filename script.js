@@ -11,6 +11,4 @@
 
 const girls = [];
 
-(function() {
-  main();
-})();
+main();
