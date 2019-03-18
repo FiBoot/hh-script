@@ -30,7 +30,13 @@ function mutex(element, cb) {
 function createBaseInterface() {
   appendElement({
     type: TYPE.BTN,
-    style: Object.assign({}, STYLE.FLIP_BTN, STYLE.ABSOLUTE_TR, STYLE.POINTER, STYLE.BORDER_RAIUDS),
+    style: Object.assign(
+      {},
+      STYLE.FLIP_BTN,
+      STYLE.ABSOLUTE_TR,
+      STYLE.POINTER,
+      STYLE.BORDER_RAIUDS
+    ),
     attributes: {
       id: ID.FLIP_BTN,
       onclick: () => {
@@ -42,7 +48,12 @@ function createBaseInterface() {
 
   const boardWrap = appendElement({
     type: TYPE.DIV,
-    style: Object.assign({}, STYLE.BOARD_WRAP, STYLE.ABSOLUTE_TR, STYLE.BORDER_RAIUDS),
+    style: Object.assign(
+      {},
+      STYLE.BOARD_WRAP,
+      STYLE.ABSOLUTE_TR,
+      STYLE.BORDER_RAIUDS
+    ),
     attributes: {
       id: ID.BOARD
     }
@@ -114,7 +125,12 @@ function createFightBlocks(board) {
     const fightBlock = appendElement({
       type: TYPE.DIV,
       parent: fightBoard,
-      style: Object.assign({}, STYLE.FIGHT_BLOCK, STYLE.POINTER, STYLE.BORDER_RAIUDS),
+      style: Object.assign(
+        {},
+        STYLE.FIGHT_BLOCK,
+        STYLE.POINTER,
+        STYLE.BORDER_RAIUDS
+      ),
       attributes: {
         id,
         onclick: () => {
@@ -143,7 +159,12 @@ function createFightBlocks(board) {
     appendElement({
       type: TYPE.DIV,
       parent: fightOption,
-      style: Object.assign({}, STYLE.FIGHT_OPTION, STYLE.DARK_BACKGROUND, STYLE.POINTER),
+      style: Object.assign(
+        {},
+        STYLE.FIGHT_OPTION,
+        STYLE.DARK_BACKGROUND,
+        STYLE.POINTER
+      ),
       attributes: {
         id: `${ID.FIGHT_OPTION}${index}`,
         onclick: () => selectFightOption(index)
@@ -165,10 +186,9 @@ function getMoney(index, element) {
       const percent = Math.round((index / girls.length) * 10000) / 100;
       element.style.width = `${percent}%`;
       element.innerText = `${percent}% (${index}/${girls.length})`;
-      setTimeout(() => getMoney(index + 1, element), TIMEOUT_SPAN);
-      // xhrPost(`class=Girl&which=${girls[index]}&action=get_salary`, result => {
-      //   getMoney(index + 1, element);
-      // });
+      xhrPost(`class=Girl&which=${girls[index]}&action=get_salary`, () =>
+        getMoney(index + 1, element)
+      );
     } else {
       element.classList.remove(ID.LOADING);
     }
@@ -179,11 +199,18 @@ function getMoney(index, element) {
 }
 
 function selectFightOption(index) {
-  const defaultStyle = Object.assign({}, STYLE.FIGHT_OPTION, STYLE.POINTER);
+  const defaultStyle = Object.assign(
+    {},
+    STYLE.FIGHT_OPTION,
+    STYLE.DARK_BACKGROUND,
+    STYLE.POINTER
+  );
   FIGHT_OPTIONS.forEach((_, i) => {
     Object.assign(
       document.getElementById(`${ID.FIGHT_OPTION}${i}`).style,
-      index === i ? Object.assign({}, defaultStyle, STYLE.FIGHT_OPTION_ON) : defaultStyle
+      index === i
+        ? Object.assign({}, defaultStyle, STYLE.FIGHT_OPTION_ON)
+        : defaultStyle
     );
   });
   fightCount = FIGHT_OPTIONS[index];
@@ -201,17 +228,16 @@ function fightOpponent(index, element, count, max) {
       }
     });
 
-    // TEST
-    setTimeout(() => {
+    const formData = new FormData();
+    formData.append('class', 'Battle');
+    formData.append('action', 'fight');
+    formData.append('who[id_troll]', index + 1);
+    xhrPost(formData, result => {
+      console.log(result);
       element.removeChild(fightLoading);
       element.classList.remove(ID.LOADING);
       fightOpponent(index, element, count + 1, max);
-    }, TIMEOUT_SPAN);
-    // xhrPost(`class=Battle&action=fight&who[id_troll]=${index}`, result => {
-    //   element.removeChild(fightLoading);
-    //   element.classList.remove(ID.LOADING);
-    //   fightOpponent(index, element, count + 1, max);
-    // });
+    });
   }
 }
 
