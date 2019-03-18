@@ -137,7 +137,7 @@ function createFightBlocks(board) {
   const fightOption = appendElement({
     type: 'div',
     parent: fightBoard,
-    style: { float: 'left', margin: '.5em' }
+    style: { float: 'left', margin: '10px' }
   });
   FIGHT_OPTIONS.forEach((value, index) => {
     appendElement({

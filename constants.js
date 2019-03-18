@@ -39,63 +39,62 @@ const IMG = {
 const STYLE = {
   ABSOLUTE: {
     position: 'absolute',
-    top: '.5em',
-    right: '.5em'
+    top: '8px',
+    right: '8px'
   },
   POINTER: {
     cursor: 'pointer'
   },
   MARGIN_TOP: {
-    marginTop: '1em'
+    marginTop: '16px'
   },
   MARGIN_LEFT: {
-    marginLeft: '1em'
+    marginLeft: '16px'
   },
   BORDER_RAIUDS: {
-    borderRadius: '.5em'
+    borderRadius: '8px'
   },
 
   FLIP_BTN: {
     display: 'none',
-    width: '3em',
-    height: '3em',
+    width: '40px',
+    height: '40px',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundImage: 'linear-gradient(to top,#008ed5 0,#05719c 100%)',
-    boxShadow: '0 .2em 0 rgba(13,22,25,.6), inset 0 .2em 0 #6df0ff',
-    border: '.1em solid #000'
+    boxShadow: '0 4px 0 rgba(13,22,25,.6), inset 0 4px 0 #6df0ff',
+    border: '1px solid #000'
   },
 
   BOARD_WRAP: {
     position: 'relative',
     backgroundImage: 'linear-gradient(180deg,#ffa23e,#c41b53)',
-    width: '15em',
-    padding: '.2em',
+    width: '240px',
+    padding: '4px',
     zIndex: 10
   },
   CLOSE: {
-    width: '2em',
-    height: '2em'
+    width: '32px',
+    height: '32px'
   },
   BOARD: {
     float: 'left',
     backgroundColor: '#4b202c',
     // backgroundImage: 'linear-gradient(to top,#572332 0,#572332 1%,#2c1e1c 100%)',
-    backgroundSize: '8em',
-    borderRadius: '.35em',
-    padding: '.5em',
-    color: '#eee',
+    borderRadius: '8px',
+    padding: '8px',
+    color: '#efefef',
     fontFamily: 'sans-serif',
     fontWeight: 'bold'
   },
   BOARD_TITLE: {
-    fontSize: '1.2em',
-    paddingTop: '.2em'
+    fontSize: '20px',
+    paddingTop: '4px'
   },
 
   LOADING_BAR: {
-    height: '2em',
-    lineHeight: '2em',
+    height: '32px',
+    lineHeight: '32px',
     backgroundImage: 'linear-gradient(.25turn, #32385f, #218fd6)',
     whiteSpace: 'nowrap',
     textAlign: 'center'
@@ -104,37 +103,37 @@ const STYLE = {
   FIGHT_BLOCK: {
     float: 'left',
     position: 'relative',
-    margin: '.75em',
-    padding: '.25em',
+    margin: '8px 12px',
+    padding: '4px',
     backgroundColor: '#f0f0f0'
   },
   OPPONENT_IMG: {
-    width: '5em',
-    height: '5em',
+    width: '80px',
+    height: '80px',
     backgroundColor: '#848597'
   },
   FIGHT_LOADING: {
     position: 'absolute',
     top: 0,
     left: 0,
-    width: '5.5em',
-    height: '5.5em',
+    width: '88px',
+    height: '88px',
     backgroundColor: 'rgba(0,0,0,.5)'
   },
 
   FIGHT_OPTION: {
     display: 'inline-block',
-    width: '1em',
-    height: '1em',
-    margin: '0 .5em 0 1em',
+    width: '16px',
+    height: '16px',
+    margin: '0 8px 0 16px',
     backgroundColor: '#1e2754',
-    border: '.1em solid #f0f0f0',
-    borderRadius: '.2em',
+    border: '1.5px solid #f0f0f0',
+    borderRadius: '4px',
     boxShadow: 'none'
   },
   FIGHT_OPTION_ON: {
     backgroundColor: '#f3e524',
-    boxShadow: '0 0 .5em #f3e524'
+    boxShadow: '0 0 3px #f3e524'
   }
 };
 
