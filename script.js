@@ -10,6 +10,8 @@
 // @require      https://raw.githubusercontent.com/FiBoot/hh-script/master/main.js
 // ==/UserScript==
 
+const girls = [];
+
 (function() {
   main();
 })();
