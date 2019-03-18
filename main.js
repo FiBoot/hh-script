@@ -149,13 +149,13 @@ function createFightBlocks(board) {
       innerText: 'Fight:'
     }
   });
-  FIGHT_OPTIONS.forEach(({ id, value }, index) => {
+  FIGHT_OPTIONS.forEach((value, index) => {
     appendElement({
       type: 'div',
       parent: fightOption,
       style: Object.assign({}, STYLE.FIGHT_OPTION, STYLE.POINTER),
       attributes: {
-        id,
+        id: `${ID.FIGHT_OPTION}${index}`,
         onclick: () => selectFightOption(index)
       }
     });
@@ -188,15 +188,15 @@ function getMoney(index, element) {
   }
 }
 
-function selectFightOption(option) {
+function selectFightOption(index) {
   const defaultStyle = Object.assign({}, STYLE.FIGHT_OPTION, STYLE.POINTER);
-  FIGHT_OPTIONS.forEach(({ id }, index) => {
+  FIGHT_OPTIONS.forEach((_, i) => {
     Object.assign(
-      document.getElementById(id).style,
-      option === index ? Object.assign({}, defaultStyle, STYLE.FIGHT_OPTION_ON) : defaultStyle
+      document.getElementById(`${ID.FIGHT_OPTION}${i}`).style,
+      index === i ? Object.assign({}, defaultStyle, STYLE.FIGHT_OPTION_ON) : defaultStyle
     );
   });
-  fightCount = FIGHT_OPTIONS[option].value;
+  fightCount = FIGHT_OPTIONS[index];
 }
 
 function fightOpponent(index, element, count, max) {

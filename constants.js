@@ -16,20 +16,7 @@ const OPPONENTS = [
   'Roko',
   'Karole'
 ];
-const FIGHT_OPTIONS = [
-  {
-    id: `${ID_PREFIX}FIGHT_OPTION_1`,
-    value: 1
-  },
-  {
-    id: `${ID_PREFIX}FIGHT_OPTION_2`,
-    value: 5
-  },
-  {
-    id: `${ID_PREFIX}FIGHT_OPTION_3`,
-    value: 20
-  }
-];
+const FIGHT_OPTIONS = [1, 5, 20];
 
 // IDS
 const ID = {
@@ -38,6 +25,7 @@ const ID = {
   FLIP_BTN: `${ID_PREFIX}FLIP_BTN`,
   BOARD: `${ID_PREFIX}BOARD`,
   LOADING_BAR: `${ID_PREFIX}LOADING_BAR`,
+  FIGHT_OPTION: `${ID_PREFIX}FIGHT_OPTION_`,
   FIGHT_OPTIONS: `${ID_PREFIX}FIGHT_OPTIONS`
 };
 
