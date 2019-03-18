@@ -70,7 +70,7 @@ const STYLE = {
   BOARD_WRAP: {
     position: 'relative',
     backgroundImage: 'linear-gradient(180deg,#ffa23e,#c41b53)',
-    width: '240px',
+    width: '248px',
     padding: '4px',
     zIndex: 10
   },
