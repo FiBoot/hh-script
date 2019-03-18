@@ -7,9 +7,7 @@ function createElement({ type, attributes, style }) {
 
 function appendElement({ type, parent, attributes, style }) {
   const element = createElement({ type, parent, attributes, style });
-  // (parent ? parent : document.getElementById(ID.HH_BODY)).appendChild(element);
-  // TEST
-  (parent ? parent : document.getElementById('navbar')).appendChild(element);
+  (parent ? parent : document.body).appendChild(element);
   return element;
 }
 
