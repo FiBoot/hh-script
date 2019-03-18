@@ -1,6 +1,6 @@
 // CONFIG
 const POST_URL = 'https://www.hentaiheroes.com/ajax.php';
-const SOURCE = 'https://raw.githubusercontent.com/FiBoot/hh-script/master'
+const SOURCE = 'https://raw.githubusercontent.com/FiBoot/hh-script/master';
 const TIMEOUT_SPAN = 50;
 const ID_PREFIX = 'HHS_';
 
@@ -38,23 +38,16 @@ const IMG = {
 
 // STYLE
 const STYLE = {
-  ABSOLUTE: {
+  ABSOLUTE_TR: {
     position: 'absolute',
     top: '8px',
     right: '8px'
   },
-  POINTER: {
-    cursor: 'pointer'
-  },
-  MARGIN_TOP: {
-    marginTop: '16px'
-  },
-  MARGIN_LEFT: {
-    marginLeft: '16px'
-  },
-  BORDER_RAIUDS: {
-    borderRadius: '8px'
-  },
+  POINTER: { cursor: 'pointer' },
+  MARGIN_TOP: { marginTop: '16px' },
+  MARGIN_LEFT: { marginLeft: '16px' },
+  BORDER_RAIUDS: { borderRadius: '8px' },
+  DARK_BACKGROUND: { backgroundColor: '#1e2754' },
 
   FLIP_BTN: {
     display: 'none',
@@ -127,7 +120,6 @@ const STYLE = {
     width: '16px',
     height: '16px',
     margin: '0 8px 0 16px',
-    backgroundColor: '#1e2754',
     border: '1.5px solid #f0f0f0',
     borderRadius: '4px',
     boxShadow: 'none'
@@ -136,6 +128,13 @@ const STYLE = {
     backgroundColor: '#f3e524',
     boxShadow: '0 0 3px #f3e524'
   }
+};
+
+const TYPE = {
+  DIV: 'div',
+  BTN: 'button',
+  IMG: 'img',
+  LABEL: 'label'
 };
 
 // backgroundImage: 'linear-gradient(.25turn, #710036, #d70f5d)',

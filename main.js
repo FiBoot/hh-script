@@ -29,8 +29,8 @@ function mutex(element, cb) {
 
 function createBaseInterface() {
   appendElement({
-    type: 'button',
-    style: Object.assign({}, STYLE.FLIP_BTN, STYLE.ABSOLUTE, STYLE.POINTER, STYLE.BORDER_RAIUDS),
+    type: TYPE.BTN,
+    style: Object.assign({}, STYLE.FLIP_BTN, STYLE.ABSOLUTE_TR, STYLE.POINTER, STYLE.BORDER_RAIUDS),
     attributes: {
       id: ID.FLIP_BTN,
       onclick: () => {
@@ -41,16 +41,16 @@ function createBaseInterface() {
   });
 
   const boardWrap = appendElement({
-    type: 'div',
-    style: Object.assign({}, STYLE.BOARD_WRAP, STYLE.ABSOLUTE, STYLE.BORDER_RAIUDS),
+    type: TYPE.DIV,
+    style: Object.assign({}, STYLE.BOARD_WRAP, STYLE.ABSOLUTE_TR, STYLE.BORDER_RAIUDS),
     attributes: {
       id: ID.BOARD
     }
   });
   appendElement({
-    type: 'img',
+    type: TYPE.IMG,
     parent: boardWrap,
-    style: Object.assign({}, STYLE.CLOSE, STYLE.ABSOLUTE, STYLE.POINTER),
+    style: Object.assign({}, STYLE.CLOSE, STYLE.ABSOLUTE_TR, STYLE.POINTER),
     attributes: {
       src: IMG.CROSS,
       onclick: () => {
@@ -61,14 +61,14 @@ function createBaseInterface() {
   });
 
   const board = appendElement({
-    type: 'div',
+    type: TYPE.DIV,
     parent: boardWrap,
     style: Object.assign({}, STYLE.BOARD),
     attributes: {}
   });
 
   appendElement({
-    type: 'div',
+    type: TYPE.DIV,
     parent: board,
     style: STYLE.BOARD_TITLE,
     attributes: {
@@ -80,18 +80,18 @@ function createBaseInterface() {
 
 function createMoneyRetriever(board) {
   const loadWrap = appendElement({
-    type: 'div',
+    type: TYPE.DIV,
     parent: board,
     style: Object.assign(
-      { backgroundColor: '#0f0f0f' },
-      STYLE.LOADING_WRAP,
+      {},
+      STYLE.DARK_BACKGROUND,
       STYLE.MARGIN_TOP,
       STYLE.BORDER_RAIUDS,
       STYLE.POINTER
     )
   });
   const load = appendElement({
-    type: 'div',
+    type: TYPE.DIV,
     parent: loadWrap,
     style: Object.assign({}, STYLE.LOADING_BAR, STYLE.BORDER_RAIUDS),
     attributes: {
@@ -104,7 +104,7 @@ function createMoneyRetriever(board) {
 
 function createFightBlocks(board) {
   const fightBoard = appendElement({
-    type: 'div',
+    type: TYPE.DIV,
     parent: board,
     style: STYLE.MARGIN_TOP
   });
@@ -112,7 +112,7 @@ function createFightBlocks(board) {
   OPPONENTS.forEach((opponent, index) => {
     const id = `${ID_PREFIX}FIGHT_${index}`;
     const fightBlock = appendElement({
-      type: 'div',
+      type: TYPE.DIV,
       parent: fightBoard,
       style: Object.assign({}, STYLE.FIGHT_BLOCK, STYLE.POINTER, STYLE.BORDER_RAIUDS),
       attributes: {
@@ -124,7 +124,7 @@ function createFightBlocks(board) {
       }
     });
     appendElement({
-      type: 'img',
+      type: TYPE.IMG,
       parent: fightBlock,
       style: Object.assign({}, STYLE.OPPONENT_IMG, STYLE.BORDER_RAIUDS),
       attributes: {
@@ -135,22 +135,22 @@ function createFightBlocks(board) {
   });
 
   const fightOption = appendElement({
-    type: 'div',
+    type: TYPE.DIV,
     parent: fightBoard,
     style: { float: 'left', margin: '10px' }
   });
   FIGHT_OPTIONS.forEach((value, index) => {
     appendElement({
-      type: 'div',
+      type: TYPE.DIV,
       parent: fightOption,
-      style: Object.assign({}, STYLE.FIGHT_OPTION, STYLE.POINTER),
+      style: Object.assign({}, STYLE.FIGHT_OPTION, STYLE.DARK_BACKGROUND, STYLE.POINTER),
       attributes: {
         id: `${ID.FIGHT_OPTION}${index}`,
         onclick: () => selectFightOption(index)
       }
     });
     appendElement({
-      type: 'label',
+      type: TYPE.LABEL,
       parent: fightOption,
       attributes: {
         innerText: `x${value}`
@@ -192,7 +192,7 @@ function selectFightOption(index) {
 function fightOpponent(index, element, count, max) {
   if (count < max) {
     const fightLoading = appendElement({
-      type: 'img',
+      type: TYPE.IMG,
       parent: element,
       style: Object.assign({}, STYLE.FIGHT_LOADING, STYLE.BORDER_RAIUDS),
       attributes: {
