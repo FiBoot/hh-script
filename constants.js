@@ -33,7 +33,8 @@ const ID = {
 // IMGS
 const IMG = {
   CROSS: 'https://hh.hh-content.com/design_v2/close_cross_icon.png',
-  LOADING: 'http://sandboxscpfr.wdfiles.com/local--files/aire-de-sol/filters-load.gif'
+  LOADING:
+    'http://sandboxscpfr.wdfiles.com/local--files/aire-de-sol/filters-load.gif'
 };
 
 // STYLE
@@ -74,7 +75,6 @@ const STYLE = {
   BOARD: {
     float: 'left',
     backgroundColor: '#4b202c',
-    // backgroundImage: 'linear-gradient(to top,#572332 0,#572332 1%,#2c1e1c 100%)',
     borderRadius: '8px',
     padding: '8px',
     color: '#efefef',
@@ -117,16 +117,19 @@ const STYLE = {
 
   FIGHT_OPTION: {
     display: 'inline-block',
+    transform: 'rotate(45deg)',
     width: '16px',
     height: '16px',
     margin: '0 8px 0 16px',
-    border: '1.5px solid #f0f0f0',
-    borderRadius: '4px',
+    border: '2px solid #f0f0f0',
+    backgroundColor: '#1f2958',
+    backgroundImage: 'none',
     boxShadow: 'none'
   },
   FIGHT_OPTION_ON: {
-    backgroundColor: '#f3e524',
-    boxShadow: '0 0 3px #f3e524'
+    backgroundImage:
+      'radial-gradient(circle 14px at center,#fff729 0,#ffa200 100%)',
+    boxShadow: '0 0 9px rgba(255,150,0,.75)'
   }
 };
 

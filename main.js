@@ -94,8 +94,7 @@ function createMoneyRetriever(board) {
     type: TYPE.DIV,
     parent: board,
     style: Object.assign(
-      {},
-      STYLE.DARK_BACKGROUND,
+      { backgroundColor: 'rgba(0,0,0,.8)' },
       STYLE.MARGIN_TOP,
       STYLE.BORDER_RAIUDS,
       STYLE.POINTER
@@ -199,12 +198,7 @@ function getMoney(index, element) {
 }
 
 function selectFightOption(index) {
-  const defaultStyle = Object.assign(
-    {},
-    STYLE.FIGHT_OPTION,
-    STYLE.DARK_BACKGROUND,
-    STYLE.POINTER
-  );
+  const defaultStyle = Object.assign({}, STYLE.FIGHT_OPTION, STYLE.POINTER);
   FIGHT_OPTIONS.forEach((_, i) => {
     Object.assign(
       document.getElementById(`${ID.FIGHT_OPTION}${i}`).style,
