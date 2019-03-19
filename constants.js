@@ -1,5 +1,4 @@
 // CONFIG
-const DEVMOD = false;
 const POST_URL = 'https://www.hentaiheroes.com/ajax.php';
 const SOURCE = 'https://raw.githubusercontent.com/FiBoot/hh-script/master';
 const TIMEOUT_SPAN = 100;
@@ -47,10 +46,14 @@ const STYLE = {
   BORDER_RAIUDS: { borderRadius: '8px' },
   DARK_BACKGROUND: { backgroundColor: '#1e2754' },
   TOP_RIGHT: { top: '8px', right: '8px' },
+  BOTTOM_LEFT: {  bottom: '8px',  left: '8px' },
   ICON_SIZE: { width: '32px', height: '32px' },
 
   FLIP_BTN: {
     display: 'none',
+    width: '40px',
+    height: '40px',
+    padding: '0',
     backgroundImage: 'linear-gradient(to top,#008ed5 0,#05719c 100%)',
     boxShadow: '0 4px 0 rgba(13,22,25,.6), inset 0 4px 0 #6df0ff',
     border: '1px solid #000'
@@ -68,7 +71,7 @@ const STYLE = {
     backgroundColor: '#4b202c',
     borderRadius: '8px',
     padding: '8px',
-    color: '#efefef',
+    color: 'white',
     fontFamily: "'Carter One','Alegreya Sans',sans-serif",
     fontWeight: 'bold'
   },
@@ -110,7 +113,17 @@ const STYLE = {
     position: 'relative',
     margin: '8px 12px',
     padding: '4px',
-    backgroundColor: '#f0f0f0'
+    backgroundColor: 'white'
+  },
+  OPPONENT_TITLE: {
+    top: '-8px',
+    width: '88px',
+    marginLeft: '-4px',
+    textAlign: 'center',
+    whiteSpace: 'nowrap',
+    textShadow: '#0f0f0f 0 0 1px',
+    fontSize: '14px',
+    zIndex: 100
   },
   OPPONENT_IMG: {
     width: '80px',
@@ -141,8 +154,7 @@ const STYLE = {
     boxShadow: 'none'
   },
   FIGHT_OPTION_ON: {
-    backgroundImage:
-      'radial-gradient(circle 14px at center,#fff729 0,#ffa200 100%)',
+    backgroundImage: 'radial-gradient(circle 14px at center,#fff729 0,#ffa200 100%)',
     boxShadow: '0 0 9px rgba(255,150,0,.75)'
   }
 };

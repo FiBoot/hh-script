@@ -1,5 +1,9 @@
 let fightCount;
 
+function isDev() {
+  return typeof DEVMOD !== 'undefined' && DEVMOD;
+}
+
 function createElement({ type, attributes, style }) {
   const element = document.createElement(type);
   Object.assign(element, attributes);
@@ -14,7 +18,7 @@ function appendElement({ type, parent, attributes, style }) {
 }
 
 function xhrPost(data, cb) {
-  if (DEVMOD) {
+  if (isDev()) {
     return setTimeout(() => cb(), TIMEOUT_SPAN);
   }
   const xhr = new XMLHttpRequest();
@@ -31,14 +35,13 @@ function mutex(element, cb) {
 }
 
 function createBaseInterface() {
-  appendElement({
+  const flipBtn = appendElement({
     type: TYPE.BTN,
     style: Object.assign(
       {},
       STYLE.FLIP_BTN,
       STYLE.ABSOLUTE,
-      STYLE.TOP_RIGHT,
-      STYLE.ICON_SIZE,
+      STYLE.BOTTOM_LEFT,
       STYLE.BORDER_RAIUDS,
       STYLE.POINTER
     ),
@@ -51,13 +54,20 @@ function createBaseInterface() {
     }
   });
 
+  appendElement({
+    type: TYPE.IMG,
+    parent: flipBtn,
+    style: STYLE.ICON_SIZE,
+    attributes: { src: IMG.LOADING }
+  });
+
   const boardWrap = appendElement({
     type: TYPE.DIV,
     style: Object.assign(
       {},
       STYLE.BOARD_WRAP,
       STYLE.ABSOLUTE,
-      STYLE.TOP_RIGHT,
+      STYLE.BOTTOM_LEFT,
       STYLE.BORDER_RAIUDS
     ),
     attributes: {
@@ -67,13 +77,7 @@ function createBaseInterface() {
   appendElement({
     type: TYPE.IMG,
     parent: boardWrap,
-    style: Object.assign(
-      {},
-      STYLE.TOP_RIGHT,
-      STYLE.ICON_SIZE,
-      STYLE.ABSOLUTE,
-      STYLE.POINTER
-    ),
+    style: Object.assign({}, STYLE.TOP_RIGHT, STYLE.ICON_SIZE, STYLE.ABSOLUTE, STYLE.POINTER),
     attributes: {
       src: IMG.CROSS,
       onclick: () => {
@@ -95,7 +99,7 @@ function createBaseInterface() {
     parent: board,
     style: STYLE.BOARD_TITLE,
     attributes: {
-      innerText: 'Script panel'
+      innerText: `Script panel ${isDev() ? 'DEVMOD' : ''}`
     }
   });
   return board;
@@ -152,12 +156,7 @@ function createFightBlocks(board) {
     const fightBlock = appendElement({
       type: TYPE.DIV,
       parent: fightBoard,
-      style: Object.assign(
-        {},
-        STYLE.FIGHT_BLOCK,
-        STYLE.POINTER,
-        STYLE.BORDER_RAIUDS
-      ),
+      style: Object.assign({}, STYLE.FIGHT_BLOCK, STYLE.POINTER, STYLE.BORDER_RAIUDS),
       attributes: {
         id,
         onclick: () => {
@@ -167,12 +166,18 @@ function createFightBlocks(board) {
       }
     });
     appendElement({
+      type: TYPE.DIV,
+      parent: fightBlock,
+      style: Object.assign({}, STYLE.OPPONENT_TITLE, STYLE.ABSOLUTE),
+      attributes: { innerText: opponent }
+    });
+    appendElement({
       type: TYPE.IMG,
       parent: fightBlock,
       style: Object.assign({}, STYLE.OPPONENT_IMG, STYLE.BORDER_RAIUDS),
       attributes: {
         title: opponent,
-        src: `${SOURCE}/img/${index + 1}.png`
+        src: isDev() ? IMG.LOADING : `${SOURCE}/img/${index + 1}.png`
       }
     });
   });
@@ -186,12 +191,7 @@ function createFightBlocks(board) {
     appendElement({
       type: TYPE.DIV,
       parent: fightOption,
-      style: Object.assign(
-        {},
-        STYLE.FIGHT_OPTION,
-        STYLE.DARK_BACKGROUND,
-        STYLE.POINTER
-      ),
+      style: Object.assign({}, STYLE.FIGHT_OPTION, STYLE.DARK_BACKGROUND, STYLE.POINTER),
       attributes: {
         id: `${ID.FIGHT_OPTION}${index}`,
         onclick: () => selectFightOption(index)
@@ -233,9 +233,7 @@ function selectFightOption(index) {
   FIGHT_OPTIONS.forEach((_, i) => {
     Object.assign(
       document.getElementById(`${ID.FIGHT_OPTION}${i}`).style,
-      index === i
-        ? Object.assign({}, defaultStyle, STYLE.FIGHT_OPTION_ON)
-        : defaultStyle
+      index === i ? Object.assign({}, defaultStyle, STYLE.FIGHT_OPTION_ON) : defaultStyle
     );
   });
   fightCount = FIGHT_OPTIONS[index];
@@ -246,12 +244,7 @@ function fightOpponent(index, element, count, max) {
     const fightLoading = appendElement({
       type: TYPE.DIV,
       parent: element,
-      style: Object.assign(
-        {},
-        STYLE.FIGHT_LOADING,
-        STYLE.ABSOLUTE,
-        STYLE.BORDER_RAIUDS
-      )
+      style: Object.assign({}, STYLE.FIGHT_LOADING, STYLE.ABSOLUTE, STYLE.BORDER_RAIUDS)
     });
 
     const formData = new FormData();
