@@ -100,8 +100,7 @@ const STYLE = {
     lineHeight: '32px',
     backgroundImage: 'linear-gradient(to right,#505889 0,#1e9fdf 100%)',
     whiteSpace: 'nowrap',
-    textAlign: 'center',
-    transition: 'width .2s'
+    textAlign: 'center'
   },
   LOADING_TEXT: {
     width: '100%',
