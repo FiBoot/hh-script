@@ -233,9 +233,9 @@ function createFightBlocks(board) {
   const fightOption = appendElement({
     type: TYPE.DIV,
     parent: fightBoard,
-    style: { float: 'left', margin: '10px' }
+    style: Object.assign({ margin: '10px' }, STYLE.FLOAT_LEFT)
   });
-  FIGHT_OPTIONS.forEach((value, index) => {
+  COUNT_OPTIONS.forEach((value, index) => {
     appendElement({
       type: TYPE.DIV,
       parent: fightOption,
@@ -251,6 +251,36 @@ function createFightBlocks(board) {
       style: STYLE.TEXT_SHADOW,
       attributes: {
         innerText: `x${value}`
+      }
+    });
+  });
+}
+
+/**
+ * createStatsBlocks
+ *
+ * @param {*} board
+ */
+function createStatsBlocks(board) {
+  const statsBlock = appendElement({
+    type: TYPE.DIV,
+    parent: board,
+    style: Object.assign({ marginLeft: '4px' }, STYLE.MARGIN_TOP, STYLE.FLOAT_LEFT)
+  });
+  STATS.forEach(stat => {
+    const statBlock = appendElement({
+      type: TYPE.DIV,
+      parent: statsBlock,
+      style: Object.assign({}, STYLE.STAT_BLOCK, STYLE.BORDER_RAIUDS, STYLE.POINTER)
+    });
+    appendElement({
+      type: TYPE.IMG,
+      parent: statBlock,
+      style: Object.assign({}, STYLE.STAT_IMG, STYLE.BORDER_RAIUDS),
+      attributes: {
+        alt: stat,
+        title: stat,
+        src: IMG.LOADING
       }
     });
   });
@@ -290,15 +320,21 @@ function getMoney(index, element) {
  */
 function selectFightOption(index) {
   const defaultStyle = Object.assign({}, STYLE.FIGHT_OPTION, STYLE.POINTER);
-  FIGHT_OPTIONS.forEach((_, i) => {
+  COUNT_OPTIONS.forEach((_, i) => {
     Object.assign(
       document.getElementById(`${ID.FIGHT_OPTION}${i}`).style,
       index === i ? Object.assign({}, defaultStyle, STYLE.FIGHT_OPTION_ON) : defaultStyle
     );
   });
-  fightCount = FIGHT_OPTIONS[index];
+  fightCount = COUNT_OPTIONS[index];
 }
 
+/**
+ * pre-start fights
+ *
+ * @param {*} index
+ * @param {*} element
+ */
 function fight(index, element) {
   const fightLoading = appendElement({
     type: TYPE.DIV,
@@ -343,19 +379,19 @@ function fight(index, element) {
  * @param {*} max fight count
  */
 function fightOpponents(index, element, count, max) {
-    const formData = new FormData();
-    formData.append('class', 'Battle');
-    formData.append('action', 'fight');
-    formData.append('who[id_troll]', index + 1);
-    xhrPost(formData, result => {
-      console.log(result);
-      if (count < max) {
-        fightOpponents(index, element, count + 1, max);
-      } else {
-        element.removeChild(document.getElementById(ID.FIGHT_LOADING));
-        element.classList.remove(ID.LOADING);
-      }
-    });
+  const formData = new FormData();
+  formData.append('class', 'Battle');
+  formData.append('action', 'fight');
+  formData.append('who[id_troll]', index + 1);
+  xhrPost(formData, result => {
+    console.log(result);
+    if (count < max) {
+      fightOpponents(index, element, count + 1, max);
+    } else {
+      element.removeChild(document.getElementById(ID.FIGHT_LOADING));
+      element.classList.remove(ID.LOADING);
+    }
+  });
 }
 
 /**
@@ -365,7 +401,7 @@ function main() {
   const board = createBaseInterface();
   createMoneyRetriever(board);
   createFightBlocks(board);
-  // createStateModifier(board); // TODO
+  // createStatsBlocks(board); // WIP
 
-  selectFightOption(FIGHT_OPTIONS.length - 1);
+  selectFightOption(COUNT_OPTIONS.length - 1);
 }

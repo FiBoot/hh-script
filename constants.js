@@ -4,7 +4,7 @@ const SOURCE = 'https://raw.githubusercontent.com/FiBoot/hh-script/master';
 const TIMEOUT_SPAN = 100;
 const ID_PREFIX = 'HHS_';
 
-// FIGHT
+// PARAMS
 const OPPONENTS = [
   'Dark Lord',
   'Espion Ninja',
@@ -17,7 +17,8 @@ const OPPONENTS = [
   'Roko',
   'Karole'
 ];
-const FIGHT_OPTIONS = [1, 5, 20];
+const STATS = ['sa', 'char', 'agi']; // TODO
+const COUNT_OPTIONS = [1, 5, 20];
 
 // IDS
 const ID = {
@@ -42,6 +43,7 @@ const IMG = {
 const STYLE = {
   ABSOLUTE: { position: 'absolute' },
   POINTER: { cursor: 'pointer' },
+  FLOAT_LEFT: { float: 'left' },
   MARGIN_TOP: { marginTop: '16px' },
   MARGIN_LEFT: { marginLeft: '16px' },
   BORDER_RAIUDS: { borderRadius: '8px' },
@@ -161,6 +163,19 @@ const STYLE = {
   FIGHT_OPTION_ON: {
     backgroundImage: 'radial-gradient(circle 14px at center,#fff729 0,#ffa200 100%)',
     boxShadow: '0 0 9px rgba(255,150,0,.75)'
+  },
+
+  STAT_BLOCK: {
+    float: 'left',
+    position: 'relative',
+    margin: '8px',
+    padding: '4px',
+    backgroundColor: 'white'
+  },
+  STAT_IMG: {
+    width: '48px',
+    height: '48px',
+    backgroundColor: '#848597'
   }
 };
 
