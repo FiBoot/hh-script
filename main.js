@@ -1,9 +1,20 @@
 let fightCount;
 
+/**
+ * Check dev mode
+ *
+ * @returns boolean dev enable
+ */
 function isDev() {
   return typeof DEVMOD !== 'undefined' && DEVMOD;
 }
 
+/**
+ * create dom element
+ *
+ * @param {*} { type, attributes, style }
+ * @returns created element
+ */
 function createElement({ type, attributes, style }) {
   const element = document.createElement(type);
   Object.assign(element, attributes);
@@ -11,12 +22,24 @@ function createElement({ type, attributes, style }) {
   return element;
 }
 
+/**
+ * create & append dom element
+ *
+ * @param {*} { type, parent, attributes, style }
+ * @returns created element
+ */
 function appendElement({ type, parent, attributes, style }) {
   const element = createElement({ type, parent, attributes, style });
   (parent ? parent : document.body).appendChild(element);
   return element;
 }
 
+/**
+ * make a xhr post request
+ *
+ * @param {*} data post data
+ * @param {*} cb end request callback
+ */
 function xhrPost(data, cb) {
   if (isDev()) {
     return setTimeout(() => cb(), TIMEOUT_SPAN);
@@ -27,6 +50,12 @@ function xhrPost(data, cb) {
   xhr.send(data);
 }
 
+/**
+ * lock element to launch callback
+ *
+ * @param {*} element
+ * @param {*} cb
+ */
 function mutex(element, cb) {
   if (!element.classList.contains(ID.LOADING)) {
     element.className = ID.LOADING;
@@ -34,6 +63,9 @@ function mutex(element, cb) {
   }
 }
 
+/**
+ * createBaseInterface board
+ */
 function createBaseInterface() {
   const flipBtn = appendElement({
     type: TYPE.BTN,
@@ -58,7 +90,11 @@ function createBaseInterface() {
     type: TYPE.IMG,
     parent: flipBtn,
     style: STYLE.ICON_SIZE,
-    attributes: { src: IMG.LOADING }
+    attributes: {
+      alt: '',
+      title: 'Open script panel',
+      src: IMG.LOADING
+    }
   });
 
   const boardWrap = appendElement({
@@ -79,6 +115,8 @@ function createBaseInterface() {
     parent: boardWrap,
     style: Object.assign({}, STYLE.TOP_RIGHT, STYLE.ICON_SIZE, STYLE.ABSOLUTE, STYLE.POINTER),
     attributes: {
+      alt: 'cross',
+      title: 'Close panel',
       src: IMG.CROSS,
       onclick: () => {
         document.getElementById(ID.BOARD).style.display = 'none';
@@ -90,21 +128,25 @@ function createBaseInterface() {
   const board = appendElement({
     type: TYPE.DIV,
     parent: boardWrap,
-    style: Object.assign({}, STYLE.BOARD),
-    attributes: {}
+    style: Object.assign({}, STYLE.BOARD)
   });
 
   appendElement({
     type: TYPE.DIV,
     parent: board,
-    style: STYLE.BOARD_TITLE,
+    style: Object.assign({}, STYLE.BOARD_TITLE, STYLE.TEXT_SHADOW),
     attributes: {
-      innerText: `Script panel ${isDev() ? 'DEVMOD' : ''}`
+      innerText: isDev() ? 'DEVMOD' : 'Script panel'
     }
   });
   return board;
 }
 
+/**
+ * createMoneyRetriever
+ *
+ * @param {*} board
+ */
 function createMoneyRetriever(board) {
   const loadWrap = appendElement({
     type: TYPE.DIV,
@@ -133,7 +175,7 @@ function createMoneyRetriever(board) {
   appendElement({
     type: TYPE.DIV,
     parent: loadWrap,
-    style: Object.assign({}, STYLE.LOADING_TEXT, STYLE.ABSOLUTE),
+    style: Object.assign({}, STYLE.LOADING_TEXT, STYLE.ABSOLUTE, STYLE.TEXT_SHADOW),
     attributes: { id: ID.LOADING_TEXT }
   });
   appendElement({
@@ -144,6 +186,11 @@ function createMoneyRetriever(board) {
   mutex(loadingBar, () => getMoney(0, loadingBar));
 }
 
+/**
+ * createFightBlocks
+ *
+ * @param {*} board
+ */
 function createFightBlocks(board) {
   const fightBoard = appendElement({
     type: TYPE.DIV,
@@ -161,14 +208,14 @@ function createFightBlocks(board) {
         id,
         onclick: () => {
           const element = document.getElementById(id);
-          mutex(element, () => fightOpponent(index, element, 0, fightCount));
+          mutex(element, () => fight(index, element));
         }
       }
     });
     appendElement({
       type: TYPE.DIV,
       parent: fightBlock,
-      style: Object.assign({}, STYLE.OPPONENT_TITLE, STYLE.ABSOLUTE),
+      style: Object.assign({}, STYLE.OPPONENT_TITLE, STYLE.ABSOLUTE, STYLE.TEXT_SHADOW),
       attributes: { innerText: opponent }
     });
     appendElement({
@@ -176,8 +223,9 @@ function createFightBlocks(board) {
       parent: fightBlock,
       style: Object.assign({}, STYLE.OPPONENT_IMG, STYLE.BORDER_RAIUDS),
       attributes: {
+        alt: '',
         title: opponent,
-        src: isDev() ? IMG.LOADING : `${SOURCE}/img/${index + 1}.png`
+        src: isDev() ? '' : `${SOURCE}/img/${index + 1}.png`
       }
     });
   });
@@ -200,6 +248,7 @@ function createFightBlocks(board) {
     appendElement({
       type: TYPE.LABEL,
       parent: fightOption,
+      style: STYLE.TEXT_SHADOW,
       attributes: {
         innerText: `x${value}`
       }
@@ -207,6 +256,12 @@ function createFightBlocks(board) {
   });
 }
 
+/**
+ * request money for all girls
+ *
+ * @param {*} index
+ * @param {*} element
+ */
 function getMoney(index, element) {
   if (girls) {
     if (index <= girls.length) {
@@ -228,6 +283,11 @@ function getMoney(index, element) {
   }
 }
 
+/**
+ * select fight count
+ *
+ * @param {*} index
+ */
 function selectFightOption(index) {
   const defaultStyle = Object.assign({}, STYLE.FIGHT_OPTION, STYLE.POINTER);
   FIGHT_OPTIONS.forEach((_, i) => {
@@ -239,27 +299,68 @@ function selectFightOption(index) {
   fightCount = FIGHT_OPTIONS[index];
 }
 
-function fightOpponent(index, element, count, max) {
-  if (count < max) {
-    const fightLoading = appendElement({
-      type: TYPE.DIV,
-      parent: element,
-      style: Object.assign({}, STYLE.FIGHT_LOADING, STYLE.ABSOLUTE, STYLE.BORDER_RAIUDS)
-    });
+function fight(index, element) {
+  const fightLoading = appendElement({
+    type: TYPE.DIV,
+    parent: element,
+    style: Object.assign({}, STYLE.FIGHT_LOADING, STYLE.ABSOLUTE, STYLE.BORDER_RAIUDS),
+    attributes: { id: ID.FIGHT_LOADING }
+  });
+  appendElement({
+    type: TYPE.IMG,
+    parent: fightLoading,
+    style: { width: '64px' },
+    attributes: {
+      alt: 'loading',
+      src: IMG.LOADING
+    }
+  }).animate(
+    [
+      // keyframes
+      { transform: 'rotate(-10deg)' },
+      { transform: 'rotate(10deg)' },
+      { transform: 'rotate(5deg)' },
+      { transform: 'rotate(10deg)' },
+      { transform: 'rotate(-10deg)' },
+      { transform: 'rotate(-5deg)' }
+    ],
+    {
+      // timing options
+      duration: 500,
+      iterations: Infinity
+    }
+  );
 
+  fightOpponents(index, element, 0, fightCount);
+}
+
+/**
+ * ajax recursive fight (for each fight count)
+ *
+ * @param {*} index selected opponent
+ * @param {*} element opponent dom element
+ * @param {*} count fight done
+ * @param {*} max fight count
+ */
+function fightOpponents(index, element, count, max) {
     const formData = new FormData();
     formData.append('class', 'Battle');
     formData.append('action', 'fight');
     formData.append('who[id_troll]', index + 1);
     xhrPost(formData, result => {
       console.log(result);
-      element.removeChild(fightLoading);
-      element.classList.remove(ID.LOADING);
-      fightOpponent(index, element, count + 1, max);
+      if (count < max) {
+        fightOpponents(index, element, count + 1, max);
+      } else {
+        element.removeChild(document.getElementById(ID.FIGHT_LOADING));
+        element.classList.remove(ID.LOADING);
+      }
     });
-  }
 }
 
+/**
+ * main
+ */
 function main() {
   const board = createBaseInterface();
   createMoneyRetriever(board);

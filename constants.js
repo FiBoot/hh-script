@@ -27,6 +27,7 @@ const ID = {
   FLIP_BTN: `${ID_PREFIX}FLIP_BTN`,
   BOARD: `${ID_PREFIX}BOARD`,
   LOADING_BAR: `${ID_PREFIX}LOADING_BAR`,
+  FIGHT_LOADING: `${ID_PREFIX}FIGHT_LOADING`,
   FIGHT_OPTION: `${ID_PREFIX}FIGHT_OPTION_`,
   FIGHT_OPTIONS: `${ID_PREFIX}FIGHT_OPTIONS`
 };
@@ -46,8 +47,16 @@ const STYLE = {
   BORDER_RAIUDS: { borderRadius: '8px' },
   DARK_BACKGROUND: { backgroundColor: '#1e2754' },
   TOP_RIGHT: { top: '8px', right: '8px' },
-  BOTTOM_LEFT: {  bottom: '8px',  left: '8px' },
+  BOTTOM_LEFT: { bottom: '8px', left: '8px' },
   ICON_SIZE: { width: '32px', height: '32px' },
+  TEXT_SHADOW: {
+    textShadow: `
+      -1px 0 0 rgba(0, 0, 0, 0.8), 
+      1px 0 0 rgba(0, 0, 0, 0.8),
+      0 -1px 0 rgba(0, 0, 0, 0.8),
+      0 1px 0 rgba(0, 0, 0, 0.8)
+    `
+  },
 
   FLIP_BTN: {
     display: 'none',
@@ -91,7 +100,8 @@ const STYLE = {
     lineHeight: '32px',
     backgroundImage: 'linear-gradient(to right,#505889 0,#1e9fdf 100%)',
     whiteSpace: 'nowrap',
-    textAlign: 'center'
+    textAlign: 'center',
+    transition: 'width .2s'
   },
   LOADING_TEXT: {
     width: '100%',
@@ -121,7 +131,6 @@ const STYLE = {
     marginLeft: '-4px',
     textAlign: 'center',
     whiteSpace: 'nowrap',
-    textShadow: '#0f0f0f 0 0 1px',
     fontSize: '14px',
     zIndex: 100
   },
@@ -136,10 +145,7 @@ const STYLE = {
     width: '88px',
     height: '88px',
     backgroundColor: 'rgba(0,0,0,.5)',
-    backgroundImage: 'url(https://hh.hh-content.com/ic_loading_carrot.svg',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: '64px'
+    textAlign: 'center'
   },
 
   FIGHT_OPTION: {
