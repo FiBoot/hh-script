@@ -1,20 +1,11 @@
-let fightCount;
+let requestCount;
 
-/**
- * Check dev mode
- *
- * @returns boolean dev enable
- */
+// UTILS
+
 function isDev() {
   return typeof DEVMOD !== 'undefined' && DEVMOD;
 }
 
-/**
- * create dom element
- *
- * @param {*} { type, attributes, style }
- * @returns created element
- */
 function createElement({ type, attributes, style }) {
   const element = document.createElement(type);
   Object.assign(element, attributes);
@@ -22,24 +13,12 @@ function createElement({ type, attributes, style }) {
   return element;
 }
 
-/**
- * create & append dom element
- *
- * @param {*} { type, parent, attributes, style }
- * @returns created element
- */
 function appendElement({ type, parent, attributes, style }) {
   const element = createElement({ type, parent, attributes, style });
   (parent ? parent : document.body).appendChild(element);
   return element;
 }
 
-/**
- * make a xhr post request
- *
- * @param {*} data post data
- * @param {*} cb end request callback
- */
 function xhrPost(data, cb) {
   if (isDev()) {
     return setTimeout(() => cb(), TIMEOUT_SPAN);
@@ -50,12 +29,6 @@ function xhrPost(data, cb) {
   xhr.send(data);
 }
 
-/**
- * lock element to launch callback
- *
- * @param {*} element
- * @param {*} cb
- */
 function mutex(element, cb) {
   if (!element.classList.contains(ID.LOADING)) {
     element.className = ID.LOADING;
@@ -63,9 +36,8 @@ function mutex(element, cb) {
   }
 }
 
-/**
- * createBaseInterface board
- */
+// DOM CREATION
+
 function createBaseInterface() {
   const flipBtn = appendElement({
     type: TYPE.BTN,
@@ -89,11 +61,11 @@ function createBaseInterface() {
   appendElement({
     type: TYPE.IMG,
     parent: flipBtn,
-    style: STYLE.ICON_SIZE,
+    style: { width: '28px' },
     attributes: {
       alt: '',
       title: 'Open script panel',
-      src: IMG.LOADING
+      src: IMG.BTN
     }
   });
 
@@ -142,11 +114,6 @@ function createBaseInterface() {
   return board;
 }
 
-/**
- * createMoneyRetriever
- *
- * @param {*} board
- */
 function createMoneyRetriever(board) {
   const loadWrap = appendElement({
     type: TYPE.DIV,
@@ -186,16 +153,11 @@ function createMoneyRetriever(board) {
   mutex(loadingBar, () => getMoney(0, loadingBar));
 }
 
-/**
- * createFightBlocks
- *
- * @param {*} board
- */
 function createFightBlocks(board) {
   const fightBoard = appendElement({
     type: TYPE.DIV,
     parent: board,
-    style: STYLE.MARGIN_TOP
+    style: Object.assign({}, STYLE.MARGIN_TOP, STYLE.FLOAT_LEFT)
   });
 
   OPPONENTS.forEach((opponent, index) => {
@@ -229,25 +191,27 @@ function createFightBlocks(board) {
       }
     });
   });
+}
 
-  const fightOption = appendElement({
+function createCountBlocks(board) {
+  const countOptions = appendElement({
     type: TYPE.DIV,
-    parent: fightBoard,
-    style: Object.assign({ margin: '10px' }, STYLE.FLOAT_LEFT)
+    parent: board,
+    style: Object.assign({ margin: '8px 0' }, STYLE.FLOAT_LEFT)
   });
   COUNT_OPTIONS.forEach((value, index) => {
     appendElement({
       type: TYPE.DIV,
-      parent: fightOption,
-      style: Object.assign({}, STYLE.FIGHT_OPTION, STYLE.DARK_BACKGROUND, STYLE.POINTER),
+      parent: countOptions,
+      style: Object.assign({}, STYLE.COUNT_OPTION, STYLE.DARK_BACKGROUND, STYLE.POINTER),
       attributes: {
         id: `${ID.FIGHT_OPTION}${index}`,
-        onclick: () => selectFightOption(index)
+        onclick: () => selectCountOption(index)
       }
     });
     appendElement({
       type: TYPE.LABEL,
-      parent: fightOption,
+      parent: countOptions,
       style: STYLE.TEXT_SHADOW,
       attributes: {
         innerText: `x${value}`
@@ -256,22 +220,22 @@ function createFightBlocks(board) {
   });
 }
 
-/**
- * createStatsBlocks
- *
- * @param {*} board
- */
 function createStatsBlocks(board) {
   const statsBlock = appendElement({
     type: TYPE.DIV,
     parent: board,
-    style: Object.assign({ marginLeft: '4px' }, STYLE.MARGIN_TOP, STYLE.FLOAT_LEFT)
+    style: Object.assign({ marginLeft: '4px' }, STYLE.FLOAT_LEFT)
   });
-  STATS.forEach(stat => {
+  STATS.forEach((stat, index) => {
     const statBlock = appendElement({
       type: TYPE.DIV,
       parent: statsBlock,
-      style: Object.assign({}, STYLE.STAT_BLOCK, STYLE.BORDER_RAIUDS, STYLE.POINTER)
+      style: Object.assign({}, STYLE.STAT_BLOCK, STYLE.BORDER_RAIUDS, STYLE.POINTER),
+      attributes: {
+        onclick: () => {
+          mutex(statBlock, () => stats(index, statBlock));
+        }
+      }
     });
     appendElement({
       type: TYPE.IMG,
@@ -280,18 +244,14 @@ function createStatsBlocks(board) {
       attributes: {
         alt: stat,
         title: stat,
-        src: IMG.LOADING
+        src: IMG.STATS(index + 1)
       }
     });
   });
 }
 
-/**
- * request money for all girls
- *
- * @param {*} index
- * @param {*} element
- */
+// FUNCTIONS
+
 function getMoney(index, element) {
   if (girls) {
     if (index <= girls.length) {
@@ -313,28 +273,17 @@ function getMoney(index, element) {
   }
 }
 
-/**
- * select fight count
- *
- * @param {*} index
- */
-function selectFightOption(index) {
-  const defaultStyle = Object.assign({}, STYLE.FIGHT_OPTION, STYLE.POINTER);
+function selectCountOption(index) {
+  const defaultStyle = Object.assign({}, STYLE.COUNT_OPTION, STYLE.POINTER);
   COUNT_OPTIONS.forEach((_, i) => {
     Object.assign(
       document.getElementById(`${ID.FIGHT_OPTION}${i}`).style,
-      index === i ? Object.assign({}, defaultStyle, STYLE.FIGHT_OPTION_ON) : defaultStyle
+      index === i ? Object.assign({}, defaultStyle, STYLE.COUNT_OPTION_ON) : defaultStyle
     );
   });
-  fightCount = COUNT_OPTIONS[index];
+  requestCount = COUNT_OPTIONS[index];
 }
 
-/**
- * pre-start fights
- *
- * @param {*} index
- * @param {*} element
- */
 function fight(index, element) {
   const fightLoading = appendElement({
     type: TYPE.DIV,
@@ -345,39 +294,16 @@ function fight(index, element) {
   appendElement({
     type: TYPE.IMG,
     parent: fightLoading,
-    style: { width: '64px' },
+    style: { width: '64px', marginTop: '4px' },
     attributes: {
       alt: 'loading',
       src: IMG.LOADING
     }
-  }).animate(
-    [
-      // keyframes
-      { transform: 'rotate(-10deg)' },
-      { transform: 'rotate(10deg)' },
-      { transform: 'rotate(5deg)' },
-      { transform: 'rotate(10deg)' },
-      { transform: 'rotate(-10deg)' },
-      { transform: 'rotate(-5deg)' }
-    ],
-    {
-      // timing options
-      duration: 500,
-      iterations: Infinity
-    }
-  );
+  }).animate(ANIMATION.KEYS, ANIMATION.OPTIONS);
 
-  fightOpponents(index, element, 0, fightCount);
+  fightOpponents(index, element, 1, requestCount);
 }
 
-/**
- * ajax recursive fight (for each fight count)
- *
- * @param {*} index selected opponent
- * @param {*} element opponent dom element
- * @param {*} count fight done
- * @param {*} max fight count
- */
 function fightOpponents(index, element, count, max) {
   const formData = new FormData();
   formData.append('class', 'Battle');
@@ -394,14 +320,49 @@ function fightOpponents(index, element, count, max) {
   });
 }
 
-/**
- * main
- */
+function stats(index, element) {
+  const statLoading = appendElement({
+    type: TYPE.DIV,
+    parent: element,
+    style: Object.assign({}, STYLE.STAT_LOADING, STYLE.ABSOLUTE, STYLE.BORDER_RAIUDS),
+    attributes: { id: ID.FIGHT_LOADING }
+  });
+  appendElement({
+    type: TYPE.IMG,
+    parent: statLoading,
+    style: { width: '40px', marginTop: '4px' },
+    attributes: {
+      alt: 'loading',
+      src: IMG.LOADING
+    }
+  }).animate(ANIMATION.KEYS, ANIMATION.OPTIONS);
+
+  statsUp(index, element, 1, requestCount);
+}
+
+function statsUp(index, element, count, max) {
+  const formData = new FormData();
+  formData.append('class', 'Hero');
+  formData.append('action', 'pay_up_carac');
+  formData.append('carac', STATS[index]);
+  xhrPost(formData, result => {
+    if (count < max) {
+      statsUp(index, element, count + 1, max);
+    } else {
+      element.removeChild(document.getElementById(ID.FIGHT_LOADING));
+      element.classList.remove(ID.LOADING);
+    }
+  });
+}
+
+// MAIN
+
 function main() {
   const board = createBaseInterface();
   createMoneyRetriever(board);
   createFightBlocks(board);
-  // createStatsBlocks(board); // WIP
+  createCountBlocks(board);
+  createStatsBlocks(board);
 
-  selectFightOption(COUNT_OPTIONS.length - 1);
+  selectCountOption(COUNT_OPTIONS.length - 1);
 }

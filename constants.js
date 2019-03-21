@@ -17,7 +17,7 @@ const OPPONENTS = [
   'Roko',
   'Karole'
 ];
-const STATS = ['sa', 'char', 'agi']; // TODO
+const STATS = ['sado', 'charm', 'tech'];
 const COUNT_OPTIONS = [1, 5, 20];
 
 // IDS
@@ -35,8 +35,10 @@ const ID = {
 
 // IMGS
 const IMG = {
+  BTN: 'https://hh.hh-content.com/design/ic_Menu.png',
   CROSS: 'https://hh.hh-content.com/design_v2/close_cross_icon.png',
-  LOADING: 'https://hh.hh-content.com/ic_loading_carrot.svg'
+  LOADING: 'https://hh.hh-content.com/ic_loading_carrot.svg',
+  STATS: index => `https://hh.hh-content.com/ic_carac/carac${index}.png`
 };
 
 // STYLE
@@ -149,18 +151,18 @@ const STYLE = {
     textAlign: 'center'
   },
 
-  FIGHT_OPTION: {
+  COUNT_OPTION: {
     display: 'inline-block',
     transform: 'rotate(45deg)',
     width: '16px',
     height: '16px',
-    margin: '0 8px 0 16px',
+    margin: '0 10px 0 20px',
     border: '2px solid #f0f0f0',
     backgroundColor: '#1f2958',
     backgroundImage: 'none',
     boxShadow: 'none'
   },
-  FIGHT_OPTION_ON: {
+  COUNT_OPTION_ON: {
     backgroundImage: 'radial-gradient(circle 14px at center,#fff729 0,#ffa200 100%)',
     boxShadow: '0 0 9px rgba(255,150,0,.75)'
   },
@@ -173,9 +175,33 @@ const STYLE = {
     backgroundColor: 'white'
   },
   STAT_IMG: {
-    width: '48px',
-    height: '48px',
-    backgroundColor: '#848597'
+    width: '40px',
+    height: '40px',
+    padding: '4px',
+    backgroundImage: 'linear-gradient(to top,#008ed5 0,#05719c 100%)'
+  },
+  STAT_LOADING: {
+    top: 0,
+    left: 0,
+    width: '56px',
+    height: '56px',
+    backgroundColor: 'rgba(0,0,0,.5)',
+    textAlign: 'center'
+  }
+};
+
+const ANIMATION = {
+  KEYS: [
+    { transform: 'rotate(-10deg)' },
+    { transform: 'rotate(10deg)' },
+    { transform: 'rotate(5deg)' },
+    { transform: 'rotate(10deg)' },
+    { transform: 'rotate(-10deg)' },
+    { transform: 'rotate(-5deg)' }
+  ],
+  OPTIONS: {
+    duration: 500,
+    iterations: Infinity
   }
 };
 
@@ -185,5 +211,3 @@ const TYPE = {
   IMG: 'img',
   LABEL: 'label'
 };
-
-// backgroundImage: 'linear-gradient(.25turn, #710036, #d70f5d)',
