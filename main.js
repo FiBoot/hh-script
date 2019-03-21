@@ -343,8 +343,8 @@ function stats(index, element) {
 function statsUp(index, element, count, max) {
   const formData = new FormData();
   formData.append('class', 'Hero');
-  formData.append('action', 'pay_up_carac');
-  formData.append('carac', STATS[index]);
+  formData.append('action', 'update_stats');
+  formData.append('carac', index + 1);
   xhrPost(formData, result => {
     if (count < max) {
       statsUp(index, element, count + 1, max);
