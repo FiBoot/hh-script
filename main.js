@@ -310,8 +310,7 @@ function fightOpponents(index, element, count, max) {
   formData.append('action', 'fight');
   formData.append('who[id_troll]', index + 1);
   xhrPost(formData, result => {
-    console.log(result);
-    if (count < max) {
+    if (result.success && count < max) {
       fightOpponents(index, element, count + 1, max);
     } else {
       element.removeChild(document.getElementById(ID.FIGHT_LOADING));
@@ -346,7 +345,7 @@ function statsUp(index, element, count, max) {
   formData.append('action', 'update_stats');
   formData.append('carac', index + 1);
   xhrPost(formData, result => {
-    if (count < max) {
+    if (result.success && count < max) {
       statsUp(index, element, count + 1, max);
     } else {
       element.removeChild(document.getElementById(ID.FIGHT_LOADING));
