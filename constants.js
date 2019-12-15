@@ -15,7 +15,9 @@ const OPPONENTS = [
   'Bremen',
   'Finalmecia',
   'Roko',
-  'Karole'
+  'Karole',
+  'Équipage de Jackson',
+  'Sorcière Pandora'
 ];
 const STATS = ['sado', 'charm', 'tech'];
 const COUNT_OPTIONS = [1, 5, 20];
