@@ -150,7 +150,7 @@ function createMoneyRetriever(board) {
     parent: loadWrap,
     style: Object.assign({}, STYLE.MONEY_ICON, STYLE.ABSOLUTE, STYLE.ICON_SIZE)
   });
-  mutex(loadingBar, () => getMoney(0, loadingBar));
+  //mutex(loadingBar, () => getMoney(0, loadingBar));
 }
 
 function createFightBlocks(board) {
